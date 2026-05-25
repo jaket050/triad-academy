@@ -4,17 +4,18 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['JetBrains Mono', 'Fira Code', 'Cascadia Code', 'monospace'],
+        mono: ['JetBrains Mono', 'Fira Code', 'Cascadia Code', 'monospace'],
       },
       colors: {
-        ink: '#172033',
-        mist: '#eef3f7',
-        cobalt: '#2156a3',
-        fern: '#387761',
-        ember: '#c56b35',
+        ink: '#111111',
+        mist: '#1a1a1a',
+        cobalt: '#00ff88',
+        fern: '#00cc66',
+        ember: '#ff8c42',
       },
       boxShadow: {
-        soft: '0 18px 50px rgba(23, 32, 51, 0.10)',
+        soft: 'none',
       },
     },
   },

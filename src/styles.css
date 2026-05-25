@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -12,9 +12,144 @@
 
 body {
   margin: 0;
+  background-color: #0d0d0d;
+  color: #e0e0e0;
 }
 
 button,
-input {
+input,
+textarea,
+select {
   font: inherit;
+}
+
+/* ── Border radius → flat ─────────────────────────────────────────── */
+.rounded,
+.rounded-sm,
+.rounded-md,
+.rounded-lg,
+.rounded-xl,
+.rounded-2xl,
+.rounded-3xl,
+.rounded-full {
+  border-radius: 2px;
+}
+
+/* ── Shadows → none ───────────────────────────────────────────────── */
+.shadow-sm,
+.shadow,
+.shadow-md,
+.shadow-lg,
+.shadow-soft {
+  box-shadow: none;
+}
+
+/* ── White / light surfaces → dark ───────────────────────────────── */
+.bg-white,
+.bg-white\/90,
+.bg-white\/95               { background-color: #111111; }
+.bg-slate-50, .bg-gray-50   { background-color: #111111; }
+.bg-slate-100, .bg-gray-100 { background-color: #1a1a1a; }
+.bg-slate-200, .bg-gray-200 { background-color: #222222; }
+.bg-slate-300, .bg-gray-300 { background-color: #333333; }
+
+/* ── Hover overrides ──────────────────────────────────────────────── */
+.hover\:bg-slate-50:hover   { background-color: #1a1a1a; }
+.hover\:bg-slate-700:hover  { background-color: #1a1a1a; }
+
+/* ── Text → legible on dark ───────────────────────────────────────── */
+.text-slate-900, .text-gray-900 { color: #e0e0e0; }
+.text-slate-800, .text-gray-800 { color: #cccccc; }
+.text-slate-700, .text-gray-700 { color: #aaaaaa; }
+.text-slate-600, .text-gray-600 { color: #888888; }
+.text-slate-500, .text-gray-500 { color: #666666; }
+.text-white                     { color: #e0e0e0; }
+.text-ink                       { color: #e0e0e0; }
+
+/* ── Border colors → dark ─────────────────────────────────────────── */
+.border-slate-100, .border-gray-100 { border-color: #1a1a1a; }
+.border-slate-200, .border-gray-200 { border-color: #2a2a2a; }
+.border-slate-300, .border-gray-300 { border-color: #3a3a3a; }
+
+/* ── Custom ink / mist surfaces ───────────────────────────────────── */
+.bg-ink  { background-color: #1a1a1a; }
+.bg-mist { background-color: #1a1a1a; }
+.hover\:bg-ink:hover { background-color: #222222; }
+
+/* ── Blue → terminal green ────────────────────────────────────────── */
+.bg-blue-50                      { background-color: #0d1a12; }
+.bg-blue-100                     { background-color: #112218; }
+.bg-blue-600                     { background-color: #00ff88; color: #0d0d0d; }
+.bg-blue-700                     { background-color: #00cc66; color: #0d0d0d; }
+.bg-blue-800                     { background-color: #00aa55; color: #0d0d0d; }
+.text-blue-600,
+.text-blue-700,
+.text-blue-800                   { color: #00ff88; }
+.text-blue-950                   { color: #00ff88; }
+.border-blue-100                 { border-color: #1a2e22; }
+.border-blue-200,
+.border-blue-300                 { border-color: #1f3828; }
+.hover\:bg-blue-100:hover        { background-color: #1a2e22; }
+.hover\:bg-blue-800:hover        { background-color: #00aa55; color: #0d0d0d; }
+.focus\:border-cobalt:focus      { border-color: #00ff88; }
+.focus\:ring-blue-100:focus      { --tw-ring-color: rgba(0, 255, 136, 0.1); }
+
+/* ── Indigo → terminal green ──────────────────────────────────────── */
+.bg-indigo-50                    { background-color: #0d1a12; }
+.bg-indigo-100                   { background-color: #112218; }
+.bg-indigo-600                   { background-color: #00ff88; color: #0d0d0d; }
+.text-indigo-700                 { color: #00ff88; }
+.border-indigo-200               { border-color: #1f3828; }
+.hover\:bg-indigo-100:hover      { background-color: #1a2e22; }
+
+/* ── Emerald → terminal green ─────────────────────────────────────── */
+.bg-emerald-50                   { background-color: #0d1a12; }
+.bg-emerald-100                  { background-color: #112218; }
+.bg-emerald-800                  { background-color: #00aa55; color: #0d0d0d; }
+.text-emerald-700                { color: #00cc66; }
+.text-emerald-900,
+.text-emerald-950                { color: #00ff88; }
+.border-emerald-100              { border-color: #1a2e22; }
+.hover\:bg-emerald-800:hover     { background-color: #00aa55; color: #0d0d0d; }
+
+/* ── cobalt / fern → green with dark text on fill ─────────────────── */
+.bg-cobalt                       { background-color: #00ff88; color: #0d0d0d; }
+.bg-fern                         { background-color: #00cc66; color: #0d0d0d; }
+.text-fern                       { color: #00cc66; }
+.hover\:bg-cobalt:hover          { background-color: #00e07a; }
+.hover\:bg-fern:hover            { background-color: #00aa55; }
+
+/* ── Amber → warm terminal (debug / warnings) ─────────────────────── */
+.bg-amber-50                     { background-color: #1a1200; }
+.bg-amber-100                    { background-color: #221800; }
+.text-amber-700,
+.text-amber-800                  { color: #ffaa33; }
+.text-amber-950                  { color: #ffcc66; }
+.border-amber-100,
+.border-amber-200                { border-color: #3a2800; }
+.hover\:bg-amber-100:hover       { background-color: #221800; }
+
+/* ── Accent / checkbox colors ─────────────────────────────────────── */
+.accent-blue-700,
+.accent-emerald-700              { accent-color: #00ff88; }
+
+/* ── Form inputs → dark ───────────────────────────────────────────── */
+input:not([type='checkbox']):not([type='radio']):not([type='range']),
+textarea,
+select {
+  background-color: #111111;
+  color: #e0e0e0;
+  border-color: #2a2a2a;
+  color-scheme: dark;
+}
+
+/* ── Blinking terminal cursor ─────────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.terminal-cursor {
+  animation: blink 1s step-start infinite;
+  color: #00ff88;
+  margin-left: 2px;
 }

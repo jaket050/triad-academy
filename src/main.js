@@ -1613,7 +1613,8 @@ function usePilotTest() {
 
 function loadFoundationState() {
   try {
-    return JSON.parse(localStorage.getItem(FOUNDATION_KEY)) || { mode: 'standard', progress: {} };
+    const saved = JSON.parse(localStorage.getItem(FOUNDATION_KEY)) || {};
+    return { progress: {}, ...saved, mode: 'standard' };
   } catch {
     return { mode: 'standard', progress: {} };
   }
@@ -2578,12 +2579,12 @@ function Sidebar({ completedCount, totalLessons, subjectProgress, pilotFocus = f
 
   return h(
     'aside',
-    { className: 'hidden w-72 shrink-0 border-r border-slate-200 bg-white px-5 py-6 lg:flex lg:flex-col' },
+    { className: 'hidden w-72 shrink-0 border-r border-[#2a2a2a] bg-[#0d0d0d] px-5 py-6 lg:flex lg:flex-col' },
     h(
       'div',
       { className: 'mb-8 flex items-center gap-3' },
-      h('div', { className: 'grid h-11 w-11 place-items-center rounded-lg bg-cobalt text-white shadow-soft' }, icon(Compass, { size: 23 })),
-      h('div', null, h('p', { className: 'text-sm font-semibold uppercase tracking-wide text-fern' }, 'Triad'), h('h1', { className: 'text-xl font-bold leading-tight' }, 'Academy')),
+      h('div', { className: 'grid h-11 w-11 place-items-center bg-[#00ff88]' }, icon(Compass, { size: 23, className: 'text-[#0d0d0d]' })),
+      h('div', null, h('p', { className: 'text-sm font-bold uppercase tracking-widest text-[#00ff88]' }, 'Triad'), h('h1', { className: 'text-xl font-bold leading-tight text-[#e0e0e0]' }, 'Academy')),
     ),
     h(
       'nav',
@@ -2592,22 +2593,22 @@ function Sidebar({ completedCount, totalLessons, subjectProgress, pilotFocus = f
         h(
           'a',
           {
-            className: 'group flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-ink',
+            className: 'group flex items-center gap-3 px-3 py-3 text-sm font-medium text-[#888888] transition hover:bg-[#1a1a1a] hover:text-[#e0e0e0]',
             href,
             key: label,
           },
-          icon(itemIcon, { className: 'text-slate-400 transition group-hover:text-cobalt' }),
+          icon(itemIcon, { className: 'text-[#555555] transition group-hover:text-[#00ff88]' }),
           h('span', { className: 'flex-1' }, label),
-          count ? h('span', { className: 'rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-500' }, count) : null,
+          count ? h('span', { className: 'bg-[#1a1a1a] px-2 py-0.5 text-xs font-bold text-[#555555]' }, count) : null,
         ),
       ),
     ),
-    pilotFocus ? h('p', { className: 'mt-4 rounded-lg border border-blue-100 bg-blue-50 p-3 text-xs font-semibold leading-5 text-blue-900' }, 'Pilot focus mode is active. Finish the guided session before returning to the full menu.') : null,
+    pilotFocus ? h('p', { className: 'mt-4 border border-[#1a2e22] bg-[#0d1a12] p-3 text-xs font-semibold leading-5 text-[#00ff88]' }, 'Pilot focus mode is active. Finish the guided session before returning to the full menu.') : null,
     h(
       'div',
-      { className: 'mt-auto rounded-lg border border-slate-200 bg-slate-50 p-4' },
-      h('div', { className: 'mb-3 flex items-center gap-2 text-sm font-semibold' }, icon(CheckCircle2, { className: 'text-fern' }), 'Progress'),
-      h('p', { className: 'text-sm leading-6 text-slate-600' }, `${completedCount} of ${totalLessons} lessons complete. Your answers and explanations stay in this browser.`),
+      { className: 'mt-auto border border-[#2a2a2a] bg-[#111111] p-4' },
+      h('div', { className: 'mb-3 flex items-center gap-2 text-sm font-semibold text-[#e0e0e0]' }, icon(CheckCircle2, { className: 'text-[#00ff88]' }), 'Progress'),
+      h('p', { className: 'text-sm leading-6 text-[#888888]' }, `${completedCount} of ${totalLessons} lessons complete. Your answers and explanations stay in this browser.`),
     ),
   );
 }
@@ -6342,15 +6343,15 @@ function ConfirmActionModal({ title, body, confirmLabel, confirmClassName = 'bg-
 function FoundationModeToggle({ mode, setMode }) {
   return h(
     'div',
-    { className: 'inline-flex rounded-lg border border-slate-200 bg-slate-50 p-1' },
+    { className: 'inline-flex border border-[#2a2a2a] bg-[#111111] p-1' },
     [
-      ['foundation', 'Foundation Mode'],
       ['standard', 'Standard Mode'],
+      ['foundation', 'Foundation Mode'],
     ].map(([value, label]) =>
       h(
         'button',
         {
-          className: `rounded-md px-3 py-2 text-sm font-bold transition ${mode === value ? 'bg-cobalt text-white shadow-soft' : 'text-slate-600 hover:bg-white'}`,
+          className: `px-3 py-2 text-sm font-bold transition ${mode === value ? 'bg-[#00ff88] text-[#0d0d0d]' : 'text-[#888888] hover:bg-[#1a1a1a] hover:text-[#e0e0e0]'}`,
           key: value,
           onClick: () => setMode(value),
         },
@@ -6368,39 +6369,39 @@ function Dashboard({ completedCount, totalLessons, nextLesson, onReset, onStartP
 
   return h(
     'section',
-    { className: 'rounded-lg border border-slate-200 bg-white p-5 shadow-sm', id: 'dashboard' },
-    h('div', { className: 'flex flex-col gap-4 md:flex-row md:items-center md:justify-between' }, h('div', null, h('p', { className: 'text-sm font-semibold uppercase tracking-wide text-fern' }, 'Dashboard'), h('h2', { className: 'mt-1 text-2xl font-bold' }, 'Build the same idea from three angles')), h(Pill, { tone: percent === 100 ? 'green' : 'blue' }, `${percent}% complete`)),
-    h('p', { className: 'mt-4 max-w-3xl text-sm leading-7 text-slate-700' }, 'Triad Academy links math, physics, and computer science so each subject reinforces the others. Start with a lesson, make a prediction, answer the quiz, explain the idea, then build a small piece of logic.'),
+    { className: 'border border-[#2a2a2a] bg-[#111111] p-5', id: 'dashboard' },
+    h('div', { className: 'flex flex-col gap-4 md:flex-row md:items-center md:justify-between' }, h('div', null, h('p', { className: 'text-sm font-bold uppercase tracking-widest text-[#00ff88]' }, 'Dashboard'), h('h2', { className: 'mt-1 text-2xl font-bold text-[#e0e0e0]' }, 'Build the same idea from three angles')), h(Pill, { tone: percent === 100 ? 'green' : 'blue' }, `${percent}% complete`)),
+    h('p', { className: 'mt-4 max-w-3xl text-sm leading-7 text-[#888888]' }, 'Triad Academy links math, physics, and computer science so each subject reinforces the others. Start with a lesson, make a prediction, answer the quiz, explain the idea, then build a small piece of logic.'),
     h(
       'div',
       { className: 'mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-6' },
-      h('div', { className: 'rounded-lg border border-slate-200 bg-slate-50 p-4' }, h('p', { className: 'text-xs font-bold uppercase tracking-wide text-slate-500' }, 'Lessons completed'), h('p', { className: 'mt-2 text-2xl font-bold text-ink' }, `${completedCount} / ${totalLessons}`)),
-      h('div', { className: 'rounded-lg border border-slate-200 bg-slate-50 p-4' }, h('p', { className: 'text-xs font-bold uppercase tracking-wide text-slate-500' }, 'Language progress'), h('p', { className: 'mt-2 text-2xl font-bold text-ink' }, `${language.completed} / ${language.total}`)),
-      h('div', { className: 'rounded-lg border border-slate-200 bg-slate-50 p-4' }, h('p', { className: 'text-xs font-bold uppercase tracking-wide text-slate-500' }, 'Lab predictions reflected'), h('p', { className: 'mt-2 text-2xl font-bold text-ink' }, `${labCompletion.completed} / ${labCompletion.total}`)),
-      h('div', { className: 'rounded-lg border border-slate-200 bg-slate-50 p-4' }, h('p', { className: 'text-xs font-bold uppercase tracking-wide text-slate-500' }, 'Build challenges completed'), h('p', { className: 'mt-2 text-2xl font-bold text-ink' }, `${buildCompleted} / ${totalBuild}`)),
-      h('div', { className: 'rounded-lg border border-slate-200 bg-slate-50 p-4' }, h('p', { className: 'text-xs font-bold uppercase tracking-wide text-slate-500' }, 'Debug challenges fixed'), h('p', { className: 'mt-2 text-2xl font-bold text-ink' }, `${debugCompleted} / ${totalDebug}`)),
-      h('div', { className: 'rounded-lg border border-slate-200 bg-slate-50 p-4' }, h('p', { className: 'text-xs font-bold uppercase tracking-wide text-slate-500' }, 'Code reading complete'), h('p', { className: 'mt-2 text-2xl font-bold text-ink' }, `${codeReadingCompleted} / ${totalCodeReading}`)),
-      h('div', { className: 'rounded-lg border border-slate-200 bg-slate-50 p-4' }, h('p', { className: 'text-xs font-bold uppercase tracking-wide text-slate-500' }, 'Karpathy milestones'), h('p', { className: 'mt-2 text-2xl font-bold text-ink' }, `${karpathyCompleted} / ${totalKarpathy}`)),
-      h('div', { className: 'rounded-lg border border-slate-200 bg-slate-50 p-4' }, h('p', { className: 'text-xs font-bold uppercase tracking-wide text-slate-500' }, 'Thinking Lab progress'), h('p', { className: 'mt-2 text-2xl font-bold text-ink' }, `${thinkingCompleted} / ${totalThinking}`)),
-      h('div', { className: 'rounded-lg border border-slate-200 bg-slate-50 p-4' }, h('p', { className: 'text-xs font-bold uppercase tracking-wide text-slate-500' }, 'Total skill coverage'), h('p', { className: 'mt-2 text-2xl font-bold text-ink' }, `${skillCompleted} / ${skillTotal}`)),
-      h('div', { className: 'rounded-lg border border-slate-200 bg-slate-50 p-4' }, h('p', { className: 'text-xs font-bold uppercase tracking-wide text-slate-500' }, 'Today’s recommended build'), h('p', { className: 'mt-2 text-sm font-bold leading-6 text-ink' }, nextBuild ? nextBuild.concept : 'Review completed builds'), h('p', { className: 'mt-1 text-sm leading-6 text-slate-600' }, nextBuild ? nextBuild.goal : 'All build challenges are complete. Revisit one and improve your pseudocode.')),
+      h('div', { className: 'border border-[#2a2a2a] border-l-2 border-l-[#00ff88] bg-[#0d0d0d] p-4' }, h('p', { className: 'text-[11px] font-bold uppercase tracking-widest text-[#00ff88]' }, 'Lessons completed'), h('p', { className: 'mt-2 text-2xl font-bold text-[#e0e0e0]' }, `${completedCount} / ${totalLessons}`)),
+      h('div', { className: 'border border-[#2a2a2a] border-l-2 border-l-[#00ff88] bg-[#0d0d0d] p-4' }, h('p', { className: 'text-[11px] font-bold uppercase tracking-widest text-[#00ff88]' }, 'Language progress'), h('p', { className: 'mt-2 text-2xl font-bold text-[#e0e0e0]' }, `${language.completed} / ${language.total}`)),
+      h('div', { className: 'border border-[#2a2a2a] border-l-2 border-l-[#00ff88] bg-[#0d0d0d] p-4' }, h('p', { className: 'text-[11px] font-bold uppercase tracking-widest text-[#00ff88]' }, 'Lab predictions reflected'), h('p', { className: 'mt-2 text-2xl font-bold text-[#e0e0e0]' }, `${labCompletion.completed} / ${labCompletion.total}`)),
+      h('div', { className: 'border border-[#2a2a2a] border-l-2 border-l-[#00ff88] bg-[#0d0d0d] p-4' }, h('p', { className: 'text-[11px] font-bold uppercase tracking-widest text-[#00ff88]' }, 'Build challenges completed'), h('p', { className: 'mt-2 text-2xl font-bold text-[#e0e0e0]' }, `${buildCompleted} / ${totalBuild}`)),
+      h('div', { className: 'border border-[#2a2a2a] border-l-2 border-l-[#00ff88] bg-[#0d0d0d] p-4' }, h('p', { className: 'text-[11px] font-bold uppercase tracking-widest text-[#00ff88]' }, 'Debug challenges fixed'), h('p', { className: 'mt-2 text-2xl font-bold text-[#e0e0e0]' }, `${debugCompleted} / ${totalDebug}`)),
+      h('div', { className: 'border border-[#2a2a2a] border-l-2 border-l-[#00ff88] bg-[#0d0d0d] p-4' }, h('p', { className: 'text-[11px] font-bold uppercase tracking-widest text-[#00ff88]' }, 'Code reading complete'), h('p', { className: 'mt-2 text-2xl font-bold text-[#e0e0e0]' }, `${codeReadingCompleted} / ${totalCodeReading}`)),
+      h('div', { className: 'border border-[#2a2a2a] border-l-2 border-l-[#00ff88] bg-[#0d0d0d] p-4' }, h('p', { className: 'text-[11px] font-bold uppercase tracking-widest text-[#00ff88]' }, 'Karpathy milestones'), h('p', { className: 'mt-2 text-2xl font-bold text-[#e0e0e0]' }, `${karpathyCompleted} / ${totalKarpathy}`)),
+      h('div', { className: 'border border-[#2a2a2a] border-l-2 border-l-[#00ff88] bg-[#0d0d0d] p-4' }, h('p', { className: 'text-[11px] font-bold uppercase tracking-widest text-[#00ff88]' }, 'Thinking Lab progress'), h('p', { className: 'mt-2 text-2xl font-bold text-[#e0e0e0]' }, `${thinkingCompleted} / ${totalThinking}`)),
+      h('div', { className: 'border border-[#2a2a2a] border-l-2 border-l-[#00ff88] bg-[#0d0d0d] p-4' }, h('p', { className: 'text-[11px] font-bold uppercase tracking-widest text-[#00ff88]' }, 'Total skill coverage'), h('p', { className: 'mt-2 text-2xl font-bold text-[#e0e0e0]' }, `${skillCompleted} / ${skillTotal}`)),
+      h('div', { className: 'border border-[#2a2a2a] border-l-2 border-l-[#00ff88] bg-[#0d0d0d] p-4' }, h('p', { className: 'text-[11px] font-bold uppercase tracking-widest text-[#00ff88]' }, 'Today’s recommended build'), h('p', { className: 'mt-2 text-sm font-bold leading-6 text-[#e0e0e0]' }, nextBuild ? nextBuild.concept : 'Review completed builds'), h('p', { className: 'mt-1 text-sm leading-6 text-[#888888]' }, nextBuild ? nextBuild.goal : 'All build challenges are complete. Revisit one and improve your pseudocode.')),
     ),
     h(
       'div',
-      { className: 'mt-3 rounded-lg border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-700' },
-      h('p', { className: 'font-bold text-ink' }, 'Adaptive skill focus: '),
+      { className: 'mt-3 border border-[#2a2a2a] bg-[#0d0d0d] p-4 text-sm leading-6 text-[#888888]' },
+      h('p', { className: 'font-bold text-[#e0e0e0]' }, 'Adaptive skill focus: '),
       weakSkill ? h('p', null, `${weakSkill.label} is currently ${weakSkill.score}/100. It depends on ${weakSkill.dependsOnLabels.length ? weakSkill.dependsOnLabels.join(', ') : 'no prior skills'}.`) : h('p', null, 'Complete more work to generate an adaptive skill focus.'),
     ),
     h(
       'div',
-      { className: 'mt-3 rounded-lg border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-700' },
-      h('p', { className: 'font-bold text-ink' }, 'Recommended architecture path: '),
+      { className: 'mt-3 border border-[#2a2a2a] bg-[#0d0d0d] p-4 text-sm leading-6 text-[#888888]' },
+      h('p', { className: 'font-bold text-[#e0e0e0]' }, 'Recommended architecture path: '),
       recommendedPathLesson ? h('p', null, `${recommendedPathLesson.subjectTitle} -> ${recommendedPathLesson.stageTitle} -> ${recommendedPathLesson.moduleTitle} -> ${recommendedPathLesson.title}`) : h('p', null, 'All architecture path steps are complete.'),
     ),
     h(
       'div',
-      { className: 'mt-3 rounded-lg border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-700' },
-      h('span', { className: 'font-bold text-ink' }, 'Build grading summary: '),
+      { className: 'mt-3 border border-[#2a2a2a] bg-[#0d0d0d] p-4 text-sm leading-6 text-[#888888]' },
+      h('span', { className: 'font-bold text-[#e0e0e0]' }, 'Build grading summary: '),
       `${buildGradeSummary.correct} correct, ${buildGradeSummary.partial} partially correct, ${buildGradeSummary.incorrect} incorrect, ${buildGradeSummary.ungraded} ungraded. Basic feedback is keyword-based, so your self-assessment still matters.`,
     ),
     h(
@@ -6410,56 +6411,56 @@ function Dashboard({ completedCount, totalLessons, nextLesson, onReset, onStartP
         ? h(
             'a',
             {
-              className: 'inline-flex items-center justify-center rounded-lg bg-cobalt px-4 py-2.5 text-sm font-bold text-white shadow-soft transition hover:bg-blue-800',
+              className: 'inline-flex items-center justify-center border border-[#00ff88] bg-[#00ff88] px-4 py-2.5 text-sm font-bold text-[#0d0d0d] transition hover:opacity-90',
               href: `#${nextLesson.id}`,
             },
             `Continue: ${nextLesson.title}`,
           )
-        : h('div', { className: 'rounded-lg border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900' }, 'All curriculum lessons are complete. Labs and reflections are ready for review.'),
+        : h('div', { className: 'border border-[#1a2e22] bg-[#0d1a12] px-4 py-3 text-sm font-semibold text-[#00ff88]' }, 'All curriculum lessons are complete. Labs and reflections are ready for review.'),
       nextBuild
         ? h(
             'a',
             {
-              className: 'inline-flex items-center justify-center rounded-lg bg-fern px-4 py-2.5 text-sm font-bold text-white shadow-soft transition hover:bg-emerald-800',
+              className: 'inline-flex items-center justify-center border border-[#00cc66] bg-[#00cc66] px-4 py-2.5 text-sm font-bold text-[#0d0d0d] transition hover:opacity-90',
               href: `#${nextBuild.id}`,
             },
             `Continue Building: ${nextBuild.concept}`,
           )
-        : h('div', { className: 'rounded-lg border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900' }, 'All build challenges are complete.'),
+        : h('div', { className: 'border border-[#1a2e22] bg-[#0d1a12] px-4 py-3 text-sm font-semibold text-[#00ff88]' }, 'All build challenges are complete.'),
       nextDebug
         ? h(
             'a',
             {
-              className: 'inline-flex items-center justify-center rounded-lg border border-amber-200 bg-amber-50 px-4 py-2.5 text-sm font-bold text-amber-800 transition hover:bg-amber-100',
+              className: 'inline-flex items-center justify-center border border-[#3a2800] px-4 py-2.5 text-sm font-bold text-[#ffaa33] transition hover:bg-[#1a1200]',
               href: `#${nextDebug.id}`,
             },
             `Debug: ${nextDebug.title}`,
           )
-        : h('div', { className: 'rounded-lg border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900' }, 'All debug challenges are complete.'),
+        : h('div', { className: 'border border-[#1a2e22] bg-[#0d1a12] px-4 py-3 text-sm font-semibold text-[#00ff88]' }, 'All debug challenges are complete.'),
       nextCodeReading
         ? h(
             'a',
             {
-              className: 'inline-flex items-center justify-center rounded-lg border border-blue-200 bg-blue-50 px-4 py-2.5 text-sm font-bold text-blue-700 transition hover:bg-blue-100',
+              className: 'inline-flex items-center justify-center border border-[#1f3828] px-4 py-2.5 text-sm font-bold text-[#00ff88] transition hover:bg-[#0d1a12]',
               href: `#${nextCodeReading.id}`,
             },
             `Read: ${nextCodeReading.title}`,
           )
-        : h('div', { className: 'rounded-lg border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900' }, 'All code reading challenges are complete.'),
+        : h('div', { className: 'border border-[#1a2e22] bg-[#0d1a12] px-4 py-3 text-sm font-semibold text-[#00ff88]' }, 'All code reading challenges are complete.'),
       nextKarpathyMilestone
         ? h(
             'a',
             {
-              className: 'inline-flex items-center justify-center rounded-lg border border-indigo-200 bg-indigo-50 px-4 py-2.5 text-sm font-bold text-indigo-700 transition hover:bg-indigo-100',
+              className: 'inline-flex items-center justify-center border border-[#1f3828] px-4 py-2.5 text-sm font-bold text-[#00ff88] transition hover:bg-[#0d1a12]',
               href: `#${nextKarpathyMilestone.id}`,
             },
             `Karpathy: ${nextKarpathyMilestone.title}`,
           )
-        : h('div', { className: 'rounded-lg border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900' }, 'Karpathy Path complete.'),
+        : h('div', { className: 'border border-[#1a2e22] bg-[#0d1a12] px-4 py-3 text-sm font-semibold text-[#00ff88]' }, 'Karpathy Path complete.'),
       h(
         'button',
         {
-          className: 'inline-flex items-center justify-center rounded-lg bg-ink px-4 py-2.5 text-sm font-bold text-white shadow-soft transition hover:bg-slate-700',
+          className: 'inline-flex items-center justify-center border border-[#2a2a2a] px-4 py-2.5 text-sm font-bold text-[#00ff88] transition hover:border-[#00ff88] hover:bg-[#001a0d]',
           onClick: onStartPilot,
         },
         'Start Pilot Test',
@@ -6473,7 +6474,7 @@ function Dashboard({ completedCount, totalLessons, nextLesson, onReset, onStartP
         ['Math gives the language', 'Functions, change, and uncertainty help describe patterns.'],
         ['Physics gives the world', 'Motion, forces, and energy make abstract ideas concrete.'],
         ['CS gives the tools', 'Programs, structures, and AI turn ideas into working systems.'],
-      ].map(([title, body]) => h('div', { className: 'rounded-lg border border-slate-200 bg-slate-50 p-4', key: title }, h('h3', { className: 'text-sm font-bold' }, title), h('p', { className: 'mt-2 text-sm leading-6 text-slate-600' }, body))),
+      ].map(([title, body]) => h('div', { className: 'border border-[#2a2a2a] border-l-2 border-l-[#00ff88] bg-[#0d0d0d] p-4', key: title }, h('h3', { className: 'text-sm font-bold text-[#e0e0e0]' }, title), h('p', { className: 'mt-2 text-sm leading-6 text-[#888888]' }, body))),
     ),
     h('div', { className: 'mt-5' }, h(CurriculumProgress, { subjects: subjectProgress })),
   );
@@ -6797,16 +6798,16 @@ function App() {
         { className: 'flex-1' },
         h(
           'header',
-          { className: 'border-b border-slate-200 bg-white/90 px-5 py-5 backdrop-blur lg:px-10' },
+          { className: 'border-b border-[#2a2a2a] bg-[#0d0d0d] px-5 py-5 lg:px-10' },
           h(
             'div',
             { className: 'mx-auto flex max-w-7xl flex-col gap-4' },
             h(
               'div',
               { className: 'flex flex-col gap-4 md:flex-row md:items-center md:justify-between' },
-              h('div', null, h('p', { className: 'text-sm font-semibold uppercase tracking-wide text-fern' }, 'Learning engine'), h('h1', { className: 'mt-1 text-3xl font-bold tracking-normal text-ink' }, 'Triad Academy')),
+              h('div', null, h('p', { className: 'text-sm font-bold uppercase tracking-widest text-[#00ff88]' }, 'Learning engine'), h('h1', { className: 'mt-1 text-3xl font-bold tracking-normal text-[#e0e0e0]' }, 'Triad Academy', h('span', { className: 'terminal-cursor' }, '_'))),
               h(FoundationModeToggle, { mode: foundationState.mode, setMode: setFoundationMode }),
-              h('div', { className: 'flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700' }, icon(Gauge, { className: 'text-cobalt' }), `${completedCount} / ${lessonQueue.length} complete`),
+              h('div', { className: 'flex items-center gap-2 border border-[#2a2a2a] bg-[#111111] px-3 py-2 text-sm font-semibold text-[#00ff88]' }, icon(Gauge, { className: 'text-[#00ff88]' }), `${completedCount} / ${lessonQueue.length} complete`),
             ),
             h(MobileNav, { subjectProgress, pilotFocus, foundationMode }),
           ),
