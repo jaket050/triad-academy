@@ -153,64 +153,124 @@ function buildLesson(subject, stage, moduleTitle, stageIndex, moduleIndex, lesso
   };
 }
 
+// Interleaved stage sequence: CS Fundamentals (thinking + programming) appear
+// after Math Calculus so students have loops, functions, and recursion before
+// Physics Bridges (Numerical Simulation, Control Systems, Digital Twins).
+// Remaining Math and CS stages follow Physics in the original relative order.
+const sequenceOrder = [
+  { s: 'math',      t: 'number-sense'     },
+  { s: 'math',      t: 'algebra'          },
+  { s: 'math',      t: 'functions'        },
+  { s: 'math',      t: 'geometry'         },
+  { s: 'math',      t: 'calculus'         },
+  { s: 'cs',        t: 'thinking'         },
+  { s: 'cs',        t: 'programming'      },
+  { s: 'physics',   t: 'measurement'      },
+  { s: 'physics',   t: 'motion'           },
+  { s: 'physics',   t: 'forces'           },
+  { s: 'physics',   t: 'energy'           },
+  { s: 'physics',   t: 'waves'            },
+  { s: 'physics',   t: 'electricity'      },
+  { s: 'physics',   t: 'systems'          },
+  { s: 'physics',   t: 'computation'      },
+  { s: 'math',      t: 'probability'      },
+  { s: 'math',      t: 'linear-algebra'   },
+  { s: 'math',      t: 'optimization'     },
+  { s: 'cs',        t: 'structures'       },
+  { s: 'cs',        t: 'algorithms'       },
+  { s: 'cs',        t: 'debugging'        },
+  { s: 'cs',        t: 'systems'          },
+  { s: 'cs',        t: 'data-ai'          },
+  { s: 'cs',        t: 'software'         },
+  { s: 'language',  t: 'grammar'          },
+  { s: 'language',  t: 'clarity'          },
+  { s: 'language',  t: 'paragraphs'       },
+  { s: 'language',  t: 'ambiguity'        },
+  { s: 'language',  t: 'arguments'        },
+  { s: 'language',  t: 'persuasion'       },
+  { s: 'language',  t: 'explanation'      },
+  { s: 'language',  t: 'critical-reading' },
+  { s: 'neural-ai', t: 'ai-orientation'   },
+  { s: 'neural-ai', t: 'perceptrons'      },
+  { s: 'neural-ai', t: 'networks'         },
+  { s: 'neural-ai', t: 'training'         },
+  { s: 'neural-ai', t: 'data'             },
+  { s: 'neural-ai', t: 'evaluation'       },
+  { s: 'neural-ai', t: 'applications'     },
+  { s: 'neural-ai', t: 'deployment'       },
+];
+
 function buildArchitecture() {
   let order = 1;
   let previousLessonId = null;
 
-  return subjectBlueprints.map((subject) => {
-    const stages = subject.stages.map((stage, stageIndex) => {
-      const modules = stage[2].map((moduleTitle, moduleIndex) => {
-        const lessons = lessonTypes.map((_, lessonIndex) => {
-          const lesson = buildLesson(subject, stage, moduleTitle, stageIndex, moduleIndex, lessonIndex, previousLessonId, order);
-          previousLessonId = lesson.id;
-          order += 1;
-          return lesson;
-        });
+  const blueprintMap = Object.fromEntries(subjectBlueprints.map((bp) => [bp.id, bp]));
+  const builtStageMap = {};
 
-        return {
-          id: lessons[0].moduleId,
-          title: moduleTitle,
-          order: moduleIndex + 1,
-          lessons,
-          exercises: lessons.flatMap((lesson) => lesson.exercises),
-          buildChallenges: [...new Set(lessons.flatMap((lesson) => lesson.buildChallenges))],
-          reviewItems: lessons.flatMap((lesson) => lesson.reviewItems),
-        };
+  // Process stages in curriculum sequence order so global lesson order numbers
+  // and prerequisite chains follow the interleaved progression.
+  for (const { s: subjectId, t: stageId } of sequenceOrder) {
+    const subject = blueprintMap[subjectId];
+    const stageIndex = subject.stages.findIndex((st) => st[0] === stageId);
+    const stage = subject.stages[stageIndex];
+
+    const modules = stage[2].map((moduleTitle, moduleIndex) => {
+      const lessons = lessonTypes.map((_, lessonIndex) => {
+        const lesson = buildLesson(subject, stage, moduleTitle, stageIndex, moduleIndex, lessonIndex, previousLessonId, order);
+        previousLessonId = lesson.id;
+        order += 1;
+        return lesson;
       });
 
       return {
-        id: `${subject.id}-${stage[0]}`,
-        title: stage[1],
-        order: stageIndex + 1,
-        modules,
-        prerequisites: stageIndex > 0 ? [`${subject.id}-${subject.stages[stageIndex - 1][0]}`] : [],
+        id: lessons[0].moduleId,
+        title: moduleTitle,
+        order: moduleIndex + 1,
+        lessons,
+        exercises: lessons.flatMap((lesson) => lesson.exercises),
+        buildChallenges: [...new Set(lessons.flatMap((lesson) => lesson.buildChallenges))],
+        reviewItems: lessons.flatMap((lesson) => lesson.reviewItems),
       };
     });
 
-    return {
-      id: subject.id,
-      title: subject.title,
-      skillCategory: subject.skillCategory,
-      stages,
-      order: subjectBlueprints.findIndex((item) => item.id === subject.id) + 1,
+    builtStageMap[`${subjectId}:${stageId}`] = {
+      id: `${subjectId}-${stageId}`,
+      title: stage[1],
+      order: stageIndex + 1,
+      modules,
+      prerequisites: stageIndex > 0 ? [`${subjectId}-${subject.stages[stageIndex - 1][0]}`] : [],
     };
-  });
+  }
+
+  // Reconstruct the per-subject grouping used by the Curriculum Map display.
+  return subjectBlueprints.map((subject) => ({
+    id: subject.id,
+    title: subject.title,
+    skillCategory: subject.skillCategory,
+    stages: subject.stages.map((stage) => builtStageMap[`${subject.id}:${stage[0]}`]).filter(Boolean),
+    order: subjectBlueprints.findIndex((item) => item.id === subject.id) + 1,
+  }));
 }
 
 export const curriculumArchitecture = buildArchitecture();
 
-export const architectureLessons = curriculumArchitecture.flatMap((subject) =>
-  subject.stages.flatMap((stage) =>
-    stage.modules.flatMap((module) =>
-      module.lessons.map((lesson) => ({
-        ...lesson,
-        subjectTitle: subject.title,
-        stageTitle: stage.title,
-        moduleTitle: module.title,
-      })),
-    ),
-  ),
-);
+export const architectureLessons = (() => {
+  const subjectMap = Object.fromEntries(curriculumArchitecture.map((s) => [s.id, s]));
+  return sequenceOrder.flatMap(({ s: subjectId, t: stageId }) => {
+    const subject = subjectMap[subjectId];
+    const stage = subject?.stages.find((st) => st.id === `${subjectId}-${stageId}`);
+    return stage
+      ? stage.modules.flatMap((module) =>
+          module.lessons.map((lesson) => ({
+            ...lesson,
+            subjectTitle: subject.title,
+            stageTitle: stage.title,
+            moduleTitle: module.title,
+          })),
+        )
+      : [];
+  });
+})();
 
 export const architectureStats = {
   subjects: curriculumArchitecture.length,
