@@ -1,3 +1,5 @@
+import { Atom, Calculator, Code2 } from 'lucide-react';
+
 export const FOUNDATION_CONCEPTS = [
   {
     id: 'foundation-functions',

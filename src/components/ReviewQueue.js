@@ -1,6 +1,8 @@
 import React from 'react';
 import { icon, Pill } from './shared.js';
 import { todayKey } from '../hooks.js';
+import { FOUNDATION_CONCEPTS } from '../foundationContent.js';
+import { LAB_IDS } from '../constants.js';
 const h = React.createElement;
 
 export function buildReviewQueue({ lessonQueue, lessonProgress, solveState, predictionState, buildState, debugState, codeReadingState, karpathyProgress, foundationState, reviewHistory }) {

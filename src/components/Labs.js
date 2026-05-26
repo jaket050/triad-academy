@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Atom, Calculator, Code2 } from 'lucide-react';
 import { icon, Pill } from './shared.js';
 import { LAB_IDS } from '../constants.js';
+import { FOUNDATION_CONCEPTS } from '../foundationContent.js';
 import { PredictionPanel } from './AiTutor.js';
 const h = React.createElement;
 
