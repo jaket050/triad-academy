@@ -1,8 +1,7 @@
 ﻿import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 import { architectureLessons, architectureStats, curriculumArchitecture, isArchitectureLessonUnlocked } from '../curriculumArchitecture.js';
-import { icon, Pill, FilterSelect } from './shared.js';
-import { Metric } from './Labs.js';
+import { icon, Pill, FilterSelect, Metric } from './shared.js';
 
 const h = React.createElement;
 

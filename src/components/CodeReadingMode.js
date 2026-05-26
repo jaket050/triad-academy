@@ -1,9 +1,10 @@
 ﻿import React, { useState } from 'react';
 import { CheckCircle2, ChevronDown, ChevronRight } from 'lucide-react';
 import { codeReadingChallenges } from '../codeReadingChallenges.js';
-import { icon, Pill, SelfGradeButtons, FilterSelect } from './shared.js';
+import { icon, Pill, SelfGradeButtons, FilterSelect, ReinforcementPanel } from './shared.js';
 import { PlanRow } from './DailyCoach.js';
-import { hasText } from './BuildMode.js';
+import { hasText, completionItems, CompletionChecklist } from './BuildMode.js';
+import { EmptyLessonsState } from './LessonCard.js';
 
 const h = React.createElement;
 

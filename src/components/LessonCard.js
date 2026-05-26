@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { CheckCircle2, ChevronDown, ChevronRight, PenLine } from 'lucide-react';
-import { icon, Pill, SelfGradeButtons, LessonBlock, LearningSection, StepList, SolveBeforeReveal, WorkedExample, PracticeProblem, ExplanationModeTabs } from './shared.js';
-import { AiTutorChat, AiFeedbackPanel } from './AiTutor.js';
+import { icon, slug, Pill, SelfGradeButtons, LessonBlock, LearningSection, StepList, SolveBeforeReveal, WorkedExample, PracticeProblem, ExplanationModeTabs, ReinforcementPanel } from './shared.js';
+import { AiTutorChat, AiFeedbackPanel, PredictionPanel } from './AiTutor.js';
+import { hasText, completionItems, CompletionChecklist } from './BuildMode.js';
 const h = React.createElement;
 
 export function Eli5Explanation({ lesson }) {

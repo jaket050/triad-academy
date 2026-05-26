@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CalendarCheck, PlayCircle } from 'lucide-react';
-import { icon, Pill } from './shared.js';
+import { icon, Pill, StepList, SolveBeforeReveal } from './shared.js';
 import { streakFromHistory, todayKey } from '../hooks.js';
 import { FOUNDATION_CONCEPTS } from '../foundationContent.js';
 const h = React.createElement;

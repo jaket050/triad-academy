@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SelfGradeButtons, ReinforcementPanel } from './shared.js';
+import { Metric } from './shared.js';
 const h = React.createElement;
 
 export function normalizedWords(value) {

@@ -342,3 +342,12 @@ export function FilterSelect({ label, value, options, onChange }) {
     ),
   );
 }
+
+export function Metric({ label, value, color = '#172033' }) {
+  return h(
+    'div',
+    { className: 'flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2' },
+    h('span', { className: 'text-slate-600' }, label),
+    h('span', { className: 'font-bold', style: { color } }, value),
+  );
+}

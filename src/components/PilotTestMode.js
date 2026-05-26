@@ -4,6 +4,8 @@ import { PILOT_PRE_QUESTIONS, PILOT_POST_QUESTIONS, PILOT_STEPS } from '../hooks
 import { icon, Pill } from './shared.js';
 import { PlanRow } from './DailyCoach.js';
 import { hasText, testsPassed, completionItems, CompletionChecklist } from './BuildMode.js';
+import { RangeSlider } from './Labs.js';
+import { Metric } from './shared.js';
 
 const h = React.createElement;
 

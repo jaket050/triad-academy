@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import { Pill, ResetProgressButton } from './shared.js';
+import { CurriculumProgress } from './CurriculumMap.js';
 
 const h = React.createElement;
 

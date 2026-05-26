@@ -1,9 +1,10 @@
 ﻿import React, { useState } from 'react';
 import { CheckCircle2, ChevronDown, ChevronRight } from 'lucide-react';
 import { karpathyMilestones, karpathyPhases, nextKarpathyMilestone } from '../karpathyPath.js';
-import { icon, Pill } from './shared.js';
+import { icon, Pill, StepList, ReinforcementPanel } from './shared.js';
 import { PlanRow } from './DailyCoach.js';
-import { CodeRunner } from './BuildMode.js';
+import { statusLabel, CodeRunner, completionItems, CompletionChecklist } from './BuildMode.js';
+import { SvgFrame } from './Labs.js';
 
 const h = React.createElement;
 
