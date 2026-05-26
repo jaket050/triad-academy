@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { CheckCircle2, ChevronDown, ChevronRight } from 'lucide-react';
 import { buildChallenges } from '../buildChallenges.js';
 import { FOUNDATION_CONCEPTS } from '../foundationContent.js';
@@ -19,7 +19,7 @@ export function hasText(value, min = 40) {
   return (value || '').trim().length >= min;
 }
 
-function needsConcreteExample(value) {
+export function needsConcreteExample(value) {
   const text = (value || '').toLowerCase();
   const abstractPhrases = ['machine learning', 'ai', 'artificial intelligence', 'systems', 'models', 'algorithm', 'algorithms', 'data'];
   const hasAbstractPhrase = abstractPhrases.some((phrase) => text.includes(phrase));
@@ -27,7 +27,7 @@ function needsConcreteExample(value) {
   return hasAbstractPhrase && !hasConcreteSignal;
 }
 
-function terminologyWarnings(lesson, responseText) {
+export function terminologyWarnings(lesson, responseText) {
   const lessonText = `${lesson.title} ${lesson.bigIdea} ${lesson.whyItMatters} ${lesson.mentalModel} ${lesson.guidedExample} ${lesson.bridge}`.toLowerCase();
   const response = (responseText || '').toLowerCase();
   const warnings = [];
