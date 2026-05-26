@@ -1,7 +1,7 @@
 ﻿import React, { useState } from 'react';
 import { buildChallenges } from '../buildChallenges.js';
 import { PILOT_PRE_QUESTIONS, PILOT_POST_QUESTIONS, PILOT_STEPS } from '../hooks.js';
-import { icon, Pill } from './shared.js';
+import { icon, Pill, ReinforcementPanel } from './shared.js';
 import { PlanRow } from './DailyCoach.js';
 import { hasText, testsPassed, completionItems, CompletionChecklist } from './BuildMode.js';
 import { RangeSlider } from './Labs.js';

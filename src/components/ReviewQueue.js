@@ -3,6 +3,10 @@ import { icon, Pill } from './shared.js';
 import { todayKey } from '../hooks.js';
 import { FOUNDATION_CONCEPTS } from '../foundationContent.js';
 import { LAB_IDS } from '../constants.js';
+import { buildChallenges } from '../buildChallenges.js';
+import { debugChallenges } from '../debugChallenges.js';
+import { codeReadingChallenges } from '../codeReadingChallenges.js';
+import { karpathyMilestones } from '../karpathyPath.js';
 const h = React.createElement;
 
 export function buildReviewQueue({ lessonQueue, lessonProgress, solveState, predictionState, buildState, debugState, codeReadingState, karpathyProgress, foundationState, reviewHistory }) {
