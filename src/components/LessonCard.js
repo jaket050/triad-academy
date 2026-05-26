@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CheckCircle2, ChevronDown, ChevronRight, PenLine } from 'lucide-react';
 import { icon, slug, Pill, SelfGradeButtons, LessonBlock, LearningSection, StepList, SolveBeforeReveal, WorkedExample, PracticeProblem, ExplanationModeTabs, ReinforcementPanel } from './shared.js';
 import { AiTutorChat, AiFeedbackPanel, PredictionPanel } from './AiTutor.js';
-import { hasText, completionItems, CompletionChecklist } from './BuildMode.js';
+import { hasText, completionItems, CompletionChecklist, terminologyWarnings } from './BuildMode.js';
 const h = React.createElement;
 
 export function Eli5Explanation({ lesson }) {

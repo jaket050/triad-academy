@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import { ChevronDown, ChevronRight, Rocket } from 'lucide-react';
 import { projectTracks } from '../projectTracks.js';
 import { icon, Pill } from './shared.js';
 

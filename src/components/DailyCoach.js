@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { CalendarCheck, PlayCircle } from 'lucide-react';
 import { icon, Pill, StepList, SolveBeforeReveal } from './shared.js';
 import { streakFromHistory, todayKey } from '../hooks.js';

@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-import { Bug, CheckCircle2, ChevronDown } from 'lucide-react';
+import { Bug, CheckCircle2, ChevronDown, ChevronRight } from 'lucide-react';
 import { debugChallenges } from '../debugChallenges.js';
 import { icon, Pill, FilterSelect, ReinforcementPanel } from './shared.js';
 import { PlanRow } from './DailyCoach.js';
